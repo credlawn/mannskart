@@ -78,36 +78,42 @@
 
                     <!-- Featured Categories -->
                     @if (count($featured_categories) > 0)
-                        <div class="bg-whit mt-4">
-                            <div class="aiz-carousel slick-left arrow-inactive-none arrow-x-0" data-items="6.5" data-xxl-items="6.5" data-xl-items="4.5"
-                                data-lg-items="5" data-md-items="5" data-sm-items="3" data-xs-items="2" data-arrows="true">
-                                @foreach ($featured_categories as $key => $category)
-                                    @php
-                                        $category_name = $category->getTranslation('name');
-                                    @endphp
-                                    <div class="carousel-box">
-                                        <div class="d-flex flex-column align-items-center overflow-hidden" style="width: 110px; height: 155px;border-radius: 8px;background: #f5f6f7; box-shadow: 0px 0px 25px -15px rgba(171,169,171,1);">
-                                            <div class="overflow-hidden hov-scale-img" style="width: 110px; height:100px; min-height:100px;">
-                                                <a class="d-block h-100" href="{{ route('products.category', $category->slug) }}">
-                                                    <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}"
-                                                        class="lazyload img-fit h-100 mx-auto has-transition"
-                                                        alt="{{ $category->getTranslation('name') }}"
-                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                                </a>
-                                            </div>
-                                            <p class="mt-1 mb-0 fs-12 fw-500 text-center text-truncate-2 px-2">
-                                                <a class="text-reset hov-text-primary"
-                                                    href="{{ route('products.category', $category->slug) }}"
-                                                    style="width: max-content;">
-                                                    {{ $category_name }}
-                                                </a>
-                                            </p>
+                    <div class="bg-white mt-4">
+                        <div class="aiz-carousel slick-left arrow-inactive-none arrow-x-0" data-items="6.5" data-xxl-items="6.5" data-xl-items="4.5"
+                            data-lg-items="5" data-md-items="5" data-sm-items="3" data-xs-items="2" data-arrows="true">
+                            @foreach ($featured_categories as $key => $category)
+                                @php
+                                    $category_name = $category->getTranslation('name');
+                                @endphp
+                                <div class="carousel-box">
+                                    <div class="d-flex flex-column align-items-center overflow-hidden" style="text-align: center;">
+                                         
+                                        <!-- Circular Image with Border -->
+                                        <div class="overflow-hidden" style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; 
+                                            background-color: #F192BA; border: 1px solid rgba(0, 123, 255, 0.1); box-sizing: border-box;">
+                                            <a class="d-block h-100" href="{{ route('products.category', $category->slug) }}">
+                                                <img src="{{ isset($category->bannerImage->file_name) ? my_asset($category->bannerImage->file_name) : static_asset('assets/img/placeholder.jpg') }}"
+                                                     class="lazyload img-fit h-100 mx-auto has-transition"
+                                                     alt="{{ $category->getTranslation('name') }}"
+                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                            </a>
                                         </div>
+                
+                                        <!-- Category Name Below Image with Underline -->
+                                        <p class="mt-2 mb-0 fs-12 fw-500 text-center text-truncate-2 px-2">
+                                            <a class="text-reset hov-text-primary" href="{{ route('products.category', $category->slug) }}"
+                                               style="display: block; text-decoration: underline;">
+                                                {{ $category_name }}
+                                            </a>
+                                        </p>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endif
+                    </div>
+                @endif
+
+
                 </div>
 
                 <!-- Today's deal -->
