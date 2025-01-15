@@ -12,26 +12,36 @@
                 <div class="carousel-box">
                     <div class="aiz-card-box hov-shadow-md my-2 has-transition hov-scale-img">
                         <div class="">
-                            <a href="{{ route('product', $related_product->slug) }}"
-                                class="d-block">
+                            <a href="{{ route('product', $related_product->slug) }}" class="d-block">
                                 <img class="img-fit lazyload mx-auto h-140px h-md-190px has-transition"
-                                    src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                    data-src="{{ uploaded_asset($related_product->thumbnail_img) }}"
-                                    alt="{{ $related_product->getTranslation('name') }}"
-                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                     data-src="{{ uploaded_asset($related_product->thumbnail_img) }}"
+                                     alt="{{ $related_product->getTranslation('name') }}"
+                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                             </a>
                         </div>
                         <div class="p-md-3 p-2 text-center">
                             <h3 class="fw-400 fs-14 text-dark text-truncate-2 lh-1-4 mb-0 h-35px">
                                 <a href="{{ route('product', $related_product->slug) }}"
-                                    class="d-block text-reset hov-text-primary">{{ $related_product->getTranslation('name') }}</a>
+                                   class="d-block text-reset hov-text-primary">{{ $related_product->getTranslation('name') }}</a>
                             </h3>
                             <div class="fs-14 mt-3">
                                 <span class="fw-700 text-primary">{{ home_discounted_base_price($related_product) }}</span>
                                 @if (home_base_price($related_product) != home_discounted_base_price($related_product))
-                                    <del
-                                        class="fw-700 opacity-60 ml-1">{{ home_base_price($related_product) }}</del>
+                                    <del class="fw-700 opacity-60 ml-1">{{ home_base_price($related_product) }}</del>
                                 @endif
+                            </div>
+                            
+                            <!-- Product Rating Below Price -->
+                            <div class="fs-16 d-flex justify-content-center mt-1">
+                                @php
+                                    $total_reviews = $related_product->reviews->where('status', 1)->count();
+                                @endphp
+                                <span class="rating rating-mr-1">
+                                    <!-- Render the rating stars using the existing helper -->
+                                    {{ renderStarRating($related_product->rating) }}
+                                </span>
+                                <span class="ml-1 opacity-50 fs-14">({{ $total_reviews }})</span>
                             </div>
                         </div>
                     </div>
