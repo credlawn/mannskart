@@ -113,4 +113,21 @@
             @endif
         </div>
     </div>
+    <div class="fs-16 d-flex justify-content-center mt-0">
+        @if ($product->auction_product == 0)
+            <!-- Review Section -->
+            <div class="col-16">
+                @php
+                    $total_reviews = $product->reviews->where('status', 1)->count();
+                    $formatted_rating = number_format($product->rating, 1); 
+                @endphp
+                <span class="btn-secondary-base ml-1 mt-1 fs-11 fw-600 text-white w-75px text-center"
+                    style="padding-top:2px;padding-bottom:2px;padding-left:4px;padding-right:4px;">{{ $formatted_rating }} ★</span>
+                <span class="fs-12 reviews-class">({{ $total_reviews }})</span>
+            </div>
+        @endif
+    </div>
+
+
 </div>
+

@@ -45,11 +45,6 @@
     <div class="home-banner-area mb-3" style="">
         <div class="container">
             <div class="row gutters-12 position-relative">
-                <!-- category menu -->
-                <div class="position-static d-none d-xl-block col-auto">
-                    @include('frontend.'.get_setting("homepage_select").'.partials.category_menu')
-                </div>
-
                 <div class="col-lg mt-4">
                     <!-- Sliders -->
                     @if (get_setting('home_slider_images', null, $lang) != null)
@@ -79,8 +74,8 @@
                     <!-- Featured Categories -->
                     @if (count($featured_categories) > 0)
                     <div class="bg-white mt-4">
-                        <div class="aiz-carousel slick-left arrow-inactive-none arrow-x-0" data-items="6.5" data-xxl-items="6.5" data-xl-items="4.5"
-                            data-lg-items="5" data-md-items="5" data-sm-items="3" data-xs-items="2" data-arrows="true">
+                        <div class="aiz-carousel slick-left arrow-inactive-none arrow-x-0" data-items="8.5" data-xxl-items="8.5" data-xl-items="6.5"
+                            data-lg-items="7" data-md-items="6" data-sm-items="4" data-xs-items="3" data-arrows="true">
                             @foreach ($featured_categories as $key => $category)
                                 @php
                                     $category_name = $category->getTranslation('name');

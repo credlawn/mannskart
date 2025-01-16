@@ -1,7 +1,7 @@
 @php
     $cart_added = [];
 @endphp
-<div class="aiz-card-box h-auto py-3 hov-scale-img">
+<div class="h-auto py-3 hov-scale-img">
     <div class="position-relative h-140px h-md-190px img-fit overflow-hidden">
         @php
             $product_url = route('product', $product->slug);
@@ -87,15 +87,15 @@
 
     <div class="p-2 p-md-3 text-left">
         <!-- Product name -->
-        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-35px text-center">
+        <h3 class="fw-400 fs-12 lh-1-4 mb-0 h-35px text-truncate-2 text-start">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>
-        <div class="fs-14 d-flex justify-content-center mt-3">
+        <div class="fs-14 d-flex justify-content-start mt-1">
             @if ($product->auction_product == 0)
                 <!-- Previous price -->
                 @if (home_base_price($product) != home_discounted_base_price($product))
-                    <div class="disc-amount has-transition">
+                    <div class="">
                         <del class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
                     </div>
                 @endif
@@ -111,21 +111,22 @@
                 </div>
             @endif
         </div>
-    </div>
-    <!-- Product Rating Below Price -->
-    <div class="fs-16 d-flex justify-content-center mt-1">
-        @if ($product->auction_product == 0)
-            <!-- Review Section -->
-            <div class="col-16">
-                @php
-                    $total_reviews = $product->reviews->where('status', 1)->count();
-                @endphp
-                <span class="rating rating-mr-1">
-                    <!-- Render the rating stars using the existing helper -->
-                    {{ renderStarRating($product->rating) }}
-                </span>
-                <span class="ml-1 opacity-50 fs-14">({{ $total_reviews }})</span>
-            </div>
-        @endif
+        
+
+        <!-- Product Rating Below Price -->
+        <div class="fs-16 d-flex justify-content-start mt-1">
+            @if ($product->auction_product == 0)
+                <!-- Review Section -->
+                <div class="">
+                    @php
+                        $total_reviews = $product->reviews->where('status', 1)->count();
+                        $formatted_rating = number_format($product->rating, 1);
+                    @endphp
+                    <span class="bg-primary ml-0 mt-1 fs-11 fw-600 text-white w-75px text-center"
+                        style="padding-top:2px;padding-bottom:2px;padding-left:6px;padding-right:6px;">{{ $formatted_rating }} ★</span>
+                    <span class="ml-1 opacity-50 fs-12 fw-600 w-100px">{{ $total_reviews }}</span><span class="ml-1 opacity-50 fs-11">{{ translate('Reviews') }}</span>
+                </div>
+            @endif
+        </div>
     </div>
 </div>

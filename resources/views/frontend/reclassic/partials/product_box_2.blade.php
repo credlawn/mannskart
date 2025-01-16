@@ -11,14 +11,14 @@
         @endphp
         <!-- Image -->
         <a href="{{ $product_url }}" class="d-block h-100">
-            <img class="lazyload mx-auto img-fit has-transition"
+            <img class="lazyload mt-2 mx-auto img-fit has-transition"
                 src="{{ get_image($product->thumbnail) }}"
                 alt="{{ $product->getTranslation('name') }}" title="{{ $product->getTranslation('name') }}"
                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
         </a>
         <!-- Discount percentage tag -->
         @if (discount_in_percentage($product) > 0)
-            <span class="absolute-top-left bg-primary ml-1 mt-1 fs-11 fw-700 text-white w-35px text-center"
+            <span class="absolute-top-left bg-primary ml-1 mt-3 fs-11 fw-700 text-white w-35px text-center"
                 style="padding-top:2px;padding-bottom:2px;">-{{ discount_in_percentage($product) }}%</span>
         @endif
         <!-- Wholesale tag -->
@@ -87,15 +87,15 @@
 
     <div class="p-2 text-left">
         <!-- Product name -->
-        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-40px text-center pt-1">
+        <h3 class="fw-400 fs-13 text-truncate-2 lh-1-4 mb-0 h-40px text-start pt-1">
             <a href="{{ $product_url }}" class="d-block text-reset hov-text-primary"
                 title="{{ $product->getTranslation('name') }}">{{ $product->getTranslation('name') }}</a>
         </h3>
-        <div class="fs-14 d-flex justify-content-center mt-2">
+        <div class="fs-14 d-flex justify-content-start mt-2">
             @if ($product->auction_product == 0)
                 <!-- Previous price -->
                 @if (home_base_price($product) != home_discounted_base_price($product))
-                    <div class="disc-amount has-transition">
+                    <div class="">
                         <del class="fw-400 text-secondary mr-1">{{ home_base_price($product) }}</del>
                     </div>
                 @endif
