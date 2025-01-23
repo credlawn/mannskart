@@ -121,45 +121,11 @@
                     </tr>
                 </tfoot>
             </table>
+            <div class="text-start pr-0 fs-16 fw-400 pt-4 pb-2" style="color: #28a745; border-top: 1px solid #ddd;">
+                You will save {{ single_price($discount) }} on this order 🎉
+            </div>
+                
 
-            <!-- Coupon System -->
-            @if (get_setting('coupon_system') == 1)
-                @if ($coupon_discount > 0 && $coupon_code)
-                    <div class="mt-3">
-                        <form class="" id="remove-coupon-form" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="proceed" value="{{ $proceed }}">
-                            <div class="input-group">
-                                <div class="form-control">{{ $coupon_code }}</div>
-                                <div class="input-group-append">
-                                    <button type="button" id="coupon-remove"
-                                        class="btn btn-primary">{{ translate('Change Coupon') }}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                @else
-                    <div class="mt-3">
-                        <form class="" id="apply-coupon-form" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="proceed" value="{{ $proceed }}">
-                            <div class="input-group">
-                                <input type="text" class="form-control rounded-0" name="code"
-                                    onkeydown="return event.key != 'Enter';"
-                                    placeholder="{{ translate('Have coupon code? Apply here') }}" required>
-                                <div class="input-group-append">
-                                    <button type="button" id="coupon-apply"
-                                        class="btn btn-primary rounded-0">{{ translate('Apply') }}</button>
-                                </div>
-                            </div>
-                            @if (!auth()->check())
-                                <small>{{ translate('You must Login as customer to apply coupon') }}</small>
-                            @endif
-
-                        </form>
-                    </div>
-                @endif
-            @endif
 
             @if ($proceed == 1)
             <!-- Continue to Shipping -->
