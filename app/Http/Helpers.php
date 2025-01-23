@@ -184,10 +184,26 @@ if (!function_exists('get_system_default_currency')) {
     }
 }
 
+//formats price to show in Round Figure
+if (!function_exists('custom_round')) {
+    function custom_round($price)
+    {
+        $decimalPart = $price - floor($price);
+        
+        if ($decimalPart > 0.50) {
+            return ceil($price);  // Round up
+        } else {
+            return floor($price);  // Round down
+        }
+    }
+}
+
 //converts currency to home default currency
 if (!function_exists('convert_price')) {
     function convert_price($price)
     {
+        $price = custom_round($price);
+        
         if (Session::has('currency_code') && (Session::get('currency_code') != get_system_default_currency()->code)) {
             $price = floatval($price) / floatval(get_system_default_currency()->exchange_rate);
             $price = floatval($price) * floatval(Session::get('currency_exchange_rate'));
@@ -253,6 +269,9 @@ if (!function_exists('format_price')) {
         return $fomated_price . currency_symbol();
     }
 }
+
+
+
 
 //formats price to home default price with convertion
 if (!function_exists('single_price')) {

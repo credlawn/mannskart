@@ -81,33 +81,6 @@
 
                     </ul>
                 </div>
-
-                <div class="col-6 text-right d-none d-lg-block">
-                    <ul class="list-inline mb-0 h-100 d-flex justify-content-end align-items-center">
-                        @if (get_setting('vendor_system_activation') == 1)
-                            <!-- Become a Seller -->
-                            <li class="list-inline-item mr-0 pl-0 py-2">
-                                <a href="{{ route('shops.create') }}"
-                                    class="text-secondary fs-12 pr-3 d-inline-block border-width-2 border-right">{{ translate('Become a Seller !') }}</a>
-                            </li>
-                            <!-- Seller Login -->
-                            <li class="list-inline-item mr-0 pl-0 py-2">
-                                <a href="{{ route('seller.login') }}"
-                                    class="text-secondary fs-12 pl-3 d-inline-block">{{ translate('Login to Seller') }}</a>
-                            </li>
-                        @endif
-                        @if (get_setting('helpline_number'))
-                            <!-- Helpline -->
-                            <li class="list-inline-item ml-3 pl-3 mr-0 pr-0">
-                                <a href="tel:{{ get_setting('helpline_number') }}"
-                                    class="text-secondary fs-12 d-inline-block py-2">
-                                    <span>{{ translate('Helpline') }}</span>
-                                    <span>{{ get_setting('helpline_number') }}</span>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
@@ -133,16 +106,16 @@
                     </button>
                     <!-- Header Logo -->
                     <div class="col-auto pl-0 pr-3 d-flex align-items-center">
-                        <a class="d-block py-20px mr-3 ml-0" href="{{ route('home') }}">
+                        <a class="d-block py-20px mr-1 ml-0" href="{{ route('home') }}">
                             @php
                                 $header_logo = get_setting('header_logo');
                             @endphp
                             @if ($header_logo != null)
                                 <img src="{{ uploaded_asset($header_logo) }}" alt="{{ env('APP_NAME') }}"
-                                    class="mw-100 h-30px h-md-40px" height="40">
+                                    class="mw-200 h-30px h-md-40px" height="40">
                             @else
                                 <img src="{{ static_asset('assets/img/logo.png') }}" alt="{{ env('APP_NAME') }}"
-                                    class="mw-100 h-30px h-md-40px" height="40">
+                                    class="mw-200 h-30px h-md-40px" height="40">
                             @endif
                         </a>
                     </div>

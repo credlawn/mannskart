@@ -68,7 +68,7 @@
                 <tfoot>
                     <!-- Subtotal -->
                     <tr class="cart-subtotal">
-                        <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Subtotal') }} ({{ sprintf("%02d", count($carts)) }} {{ translate('Products') }})</th>
+                        <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Price') }} ({{ sprintf("%02d", count($carts)) }} {{ translate('Items') }})</th>
                         <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($subtotal) }}</td>
                     </tr>
                     <!-- Tax -->

@@ -28,8 +28,7 @@
         @media (max-width: 991px){
             .home-banner-area .container{
                 min-width: 0;
-                padding-left: 15px !important;
-                padding-right: 15px!important;
+                
             }
         }
         @media (max-width: 767px){
