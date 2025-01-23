@@ -292,9 +292,83 @@ if (!function_exists('discount_in_percentage')) {
     }
 }
 
-//Shows Price on page based on carts
+//Shows Original Price on page based on carts
+
+if (!function_exists('cart_product_original_price')) {
+    function cart_product_original_price($cart_product, $product, $formatted = true, $tax = true)
+    {
+        if ($product->auction_product == 0) {
+            $str = '';
+            if ($cart_product['variation'] != null) {
+                $str = $cart_product['variation'];
+            }
+            $price = 0;
+            $product_stock = $product->stocks->where('variant', $str)->first();
+            if ($product_stock) {
+                $price = $product_stock->price;
+            }
+
+            if ($product->wholesale_product) {
+                $wholesalePrice = $product_stock->wholesalePrices->where('min_qty', '<=', $cart_product['quantity'])->where('max_qty', '>=', $cart_product['quantity'])->first();
+                if ($wholesalePrice) {
+                    $price = $wholesalePrice->price;
+                }
+            }
+
+        } else {
+            $price = $product->bids->max('amount');
+        }
+        if ($tax) {
+            $taxAmount = 0;
+            foreach ($product->taxes as $product_tax) {
+                if ($product_tax->tax_type == 'percent') {
+                    $taxAmount += ($price * $product_tax->tax) / 100;
+                } elseif ($product_tax->tax_type == 'amount') {
+                    $taxAmount += $product_tax->tax;
+                }
+            }
+            $price += $taxAmount;
+        }
+
+        if ($formatted) {
+            return format_price(convert_price($price));
+        } else {
+            return $price;
+        }
+    }
+}
+
+//Calculate Taxes on Origional Price
+
+if (!function_exists('cart_product_original_price_tax')) {
+    function cart_product_original_price_tax($cart_product, $product, $formatted = true)
+    {
+        $str = '';
+        if ($cart_product['variation'] != null) {
+            $str = $cart_product['variation'];
+        }
+        $product_stock = $product->stocks->where('variant', $str)->first();
+        $price = $product_stock->price;
+        $tax = 0;
+        foreach ($product->taxes as $product_tax) {
+            if ($product_tax->tax_type == 'percent') {
+                $tax += ($price * $product_tax->tax) / 100;
+            } elseif ($product_tax->tax_type == 'amount') {
+                $tax += $product_tax->tax;
+            }
+        }
+
+        if ($formatted) {
+            return format_price(convert_price($tax));
+        } else {
+            return $tax;
+        }
+    }
+}
+
+
 if (!function_exists('cart_product_price')) {
-    function cart_product_price($cart_product, $product, $formatted = true, $tax = true)
+    function cart_product_price($cart_product, $product, $formatted = true, $tax = true, $discount_applicable = true)
     {
         if ($product->auction_product == 0) {
             $str = '';

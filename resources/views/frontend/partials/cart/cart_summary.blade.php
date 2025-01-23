@@ -10,15 +10,22 @@
             $coupon_code = null;
             $coupon_discount = 0;
             $total_point = 0;
+            $original_price = 0;
+            $original_price_tax = 0;
         @endphp
         @foreach ($carts as $key => $cartItem)
             @php
                 $product = get_single_product($cartItem['product_id']);
                 $subtotal_for_min_order_amount += cart_product_price($cartItem, $cartItem->product, false, false) * $cartItem['quantity'];
                 $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
+                $original_price += cart_product_original_price($cartItem, $product, false, false) * $cartItem['quantity'];
+                $original_price_tax += cart_product_original_price_tax($cartItem, $product, false) * $cartItem['quantity'];
                 $tax += cart_product_tax($cartItem, $product, false) * $cartItem['quantity'];
                 $product_shipping_cost = $cartItem['shipping_cost'];
                 $shipping += $product_shipping_cost;
+                $original_price_with_tax = $original_price + $original_price_tax;
+                $discounted_price_with_tax = $subtotal + $tax;
+                $discount = $original_price_with_tax - $discounted_price_with_tax;
                 if ((get_setting('coupon_system') == 1) && ($cartItem->coupon_applied == 1)) {
                     $coupon_code = $cartItem->coupon_code;
                     $coupon_discount = $carts->sum('discount');
@@ -66,15 +73,15 @@
 
             <table class="table my-3">
                 <tfoot>
-                    <!-- Subtotal -->
+                    <!-- Original Price -->
                     <tr class="cart-subtotal">
                         <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Price') }} ({{ sprintf("%02d", count($carts)) }} {{ translate('Items') }})</th>
-                        <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($subtotal) }}</td>
+                        <td class="text-right pr-0 fs-16 pt-0 pb-2 text-dark border-top-0">{{ single_price($original_price_with_tax) }}</td>
                     </tr>
-                    <!-- Tax -->
-                    <tr class="cart-tax">
-                        <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Tax') }}</th>
-                        <td class="text-right pr-0 fs-14 pt-0 pb-2 text-dark border-top-0">{{ single_price($tax) }}</td>
+                    <!-- Discount -->
+                    <tr class="cart-discount">
+                        <th class="pl-0 fs-14 fw-400 pt-0 pb-2 text-dark border-top-0">{{ translate('Discount') }}</th>
+                        <td class="text-right pr-0 fs-16 fw-500 pt-0 pb-2" style="color: #28a745; border-top: none;" >{{ '- ' . single_price($discount) }}</td>
                     </tr>
                     @if ($proceed != 1)
                     <!-- Total Shipping -->
@@ -109,7 +116,7 @@
                     @endphp
                     <!-- Total -->
                     <tr class="cart-total">
-                        <th class="pl-0 fs-14 text-dark fw-700 border-top-0 pt-3 text-uppercase">{{ translate('Total') }}</th>
+                        <th class="pl-0 fs-14 text-dark fw-700 border-top-0 pt-3 text-uppercase">{{ translate('Total Amount') }}</th>
                         <td class="text-right pr-0 fs-16 fw-700 text-primary border-top-0 pt-3">{{ single_price($total) }}</td>
                     </tr>
                 </tfoot>
